@@ -1,13 +1,14 @@
 using System;
 using EntityFramework.Metadata.Extensions;
 using EntityFramework.Metadata.Test.CodeFirst.Domain;
-using NUnit.Framework;
+using FluentAssertions;
+using Xunit;
 
 namespace EntityFramework.Metadata.Test.CodeFirst
 {
     public class TphTest : TestBase
     {
-        [Test]
+        [Fact]
         public void Employee_BaseClass()
         {
             using (var ctx = GetContext())
@@ -27,7 +28,7 @@ namespace EntityFramework.Metadata.Test.CodeFirst
                     .IsPk(false)
                     .IsFk(false);
 
-                Assert.IsNull(map.Prop(x => x.NameWithTitle));
+                map.Prop(x => x.NameWithTitle).Should().BeNull();
 
                 map.Prop(x => x.Title)
                     .HasColumnName("JobTitle")
@@ -44,7 +45,7 @@ namespace EntityFramework.Metadata.Test.CodeFirst
             }
         }
 
-        [Test]
+        [Fact]
         public void Employee_DerivedType_First()
         {
             using (var ctx = GetContext())
@@ -77,12 +78,12 @@ namespace EntityFramework.Metadata.Test.CodeFirst
                 map.Prop(x => x.RefId)
                     .HasColumnName("RefId");
 
-                Assert.AreEqual(1, map.Discriminators.Length);
-                Assert.AreEqual("__employeeType", map.Discriminators[0].ColumnName);
+                Assert.Equal(1, map.Discriminators.Length);
+                Assert.Equal("__employeeType", map.Discriminators[0].ColumnName);
             }
         }
 
-        [Test]
+        [Fact]
         public void Employee_DerivedType_NotFirst()
         {
             using (var ctx = GetContext())
@@ -105,12 +106,12 @@ namespace EntityFramework.Metadata.Test.CodeFirst
                 map.Prop(x => x.RefId)
                     .HasColumnName("RefId1");
 
-                Assert.AreEqual(1, map.Discriminators.Length);
-                Assert.AreEqual("__employeeType", map.Discriminators[0].ColumnName);
+                Assert.Equal(1, map.Discriminators.Length);
+                Assert.Equal("__employeeType", map.Discriminators[0].ColumnName);
             }
         }
 
-        [Test]
+        [Fact]
         public void Contract_ContractBase()
         {
             using (var ctx = new TestContext())
@@ -118,13 +119,13 @@ namespace EntityFramework.Metadata.Test.CodeFirst
                 var map = ctx.Db<ContractBase>();
 
                 var columns = map.Properties;
-                Assert.AreEqual(19, columns.Length);
+                Assert.Equal(19, columns.Length);
 
-                Assert.AreEqual(1, map.Discriminators.Length);
+                Assert.Equal(1, map.Discriminators.Length);
             }
         }
 
-        [Test]
+        [Fact]
         public void Contract_Contract()
         {
             using (var ctx = new TestContext())
@@ -132,7 +133,7 @@ namespace EntityFramework.Metadata.Test.CodeFirst
                 var map = ctx.Db<Contract>();
 
                 var columns = map.Properties;
-                Assert.AreEqual(19, columns.Length);
+                Assert.Equal(19, columns.Length);
 
                 map.Prop(x => x.Id)
                     .IsIdentity()
@@ -152,7 +153,7 @@ namespace EntityFramework.Metadata.Test.CodeFirst
             }
         }
 
-        [Test]
+        [Fact]
         public void Contract_ContractFixed()
         {
             using (var ctx = new TestContext())
@@ -160,11 +161,11 @@ namespace EntityFramework.Metadata.Test.CodeFirst
                 var tableMapping = ctx.Db<ContractFixed>();
 
                 var columns = tableMapping.Properties;
-                Assert.AreEqual(21, columns.Length);
+                Assert.Equal(21, columns.Length);
             }
         }
 
-        [Test]
+        [Fact]
         public void Contract_ContractStock()
         {
             using (var ctx = new TestContext())
@@ -172,11 +173,11 @@ namespace EntityFramework.Metadata.Test.CodeFirst
                 var tableMapping = ctx.Db<ContractStock>();
 
                 var columns = tableMapping.Properties;
-                Assert.AreEqual(21, columns.Length);
+                Assert.Equal(21, columns.Length);
             }
         }
 
-        [Test]
+        [Fact]
         public void Contract_ContractKomb1()
         {
             using (var ctx = new TestContext())
@@ -184,7 +185,7 @@ namespace EntityFramework.Metadata.Test.CodeFirst
                 var tableMapping = ctx.Db<ContractKomb1>();
 
                 var columns = tableMapping.Properties;
-                Assert.AreEqual(24, columns.Length);
+                Assert.Equal(24, columns.Length);
 
                 tableMapping.Prop(x => x.Base)
                     .HasColumnName("Base")
@@ -193,7 +194,7 @@ namespace EntityFramework.Metadata.Test.CodeFirst
             }
         }
 
-        [Test]
+        [Fact]
         public void Contract_ContractKomb2()
         {
             using (var ctx = new TestContext())
@@ -201,7 +202,7 @@ namespace EntityFramework.Metadata.Test.CodeFirst
                 var tableMapping = ctx.Db<ContractKomb2>();
 
                 var columns = tableMapping.Properties;
-                Assert.AreEqual(26, columns.Length);
+                Assert.Equal(26, columns.Length);
             }
         }
     }

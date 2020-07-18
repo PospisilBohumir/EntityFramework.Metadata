@@ -2,16 +2,14 @@ using System;
 using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
-using NUnit.Framework;
 
 namespace EntityFramework.Metadata.Test.CodeFirst
 {
-    [TestFixture]
     public abstract class TestBase
     {
         protected const int NvarcharMax = 1073741823;
-        [SetUp]
-        public virtual void Setup()
+
+        protected TestBase()
         {
             if (!Database.Exists("TestContext"))
             {

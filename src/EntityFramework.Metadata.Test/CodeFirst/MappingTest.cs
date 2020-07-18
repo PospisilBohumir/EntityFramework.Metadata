@@ -2,14 +2,14 @@ using System;
 using System.Diagnostics;
 using EntityFramework.Metadata.Extensions;
 using EntityFramework.Metadata.Test.CodeFirst.Domain;
-using NUnit.Framework;
+using Xunit;
+using static Xunit.Assert;
 
 namespace EntityFramework.Metadata.Test.CodeFirst
 {
-    [TestFixture]
     public class MappingTest : TestBase
     {
-        [Test]
+        [Fact]
         public void TableNames()
         {
             using (var ctx = GetContext())
@@ -27,34 +27,34 @@ namespace EntityFramework.Metadata.Test.CodeFirst
                         tableMapping.TableName);
                 }
 
-                Assert.AreEqual(ctx.Db<Page>().TableName, "Pages");
-                Assert.AreEqual(ctx.Db<Page>().Schema, "dbo");
-                Assert.AreEqual(ctx.Db<PageTranslations>().TableName, "PageTranslations");
+                Equal(ctx.Db<Page>().TableName, "Pages");
+                Equal(ctx.Db<Page>().Schema, "dbo");
+                Equal(ctx.Db<PageTranslations>().TableName, "PageTranslations");
 
-                Assert.AreEqual(ctx.Db<TestUser>().TableName, "Users");
+                Equal(ctx.Db<TestUser>().TableName, "Users");
 
-                Assert.AreEqual(ctx.Db<MeteringPoint>().TableName, "MeteringPoints");
+                Equal(ctx.Db<MeteringPoint>().TableName, "MeteringPoints");
 
-                Assert.AreEqual(ctx.Db<EmployeeTPH>().TableName, "Employees");
-                Assert.AreEqual(ctx.Db<AWorkerTPH>().TableName, "Employees");
-                Assert.AreEqual(ctx.Db<ManagerTPH>().TableName, "Employees");
+                Equal(ctx.Db<EmployeeTPH>().TableName, "Employees");
+                Equal(ctx.Db<AWorkerTPH>().TableName, "Employees");
+                Equal(ctx.Db<ManagerTPH>().TableName, "Employees");
 
-                Assert.AreEqual(ctx.Db<ContractBase>().TableName, "Contracts");
-                Assert.AreEqual(ctx.Db<Contract>().TableName, "Contracts");
-                Assert.AreEqual(ctx.Db<ContractFixed>().TableName, "Contracts");
-                Assert.AreEqual(ctx.Db<ContractStock>().TableName, "Contracts");
-                Assert.AreEqual(ctx.Db<ContractKomb1>().TableName, "Contracts");
-                Assert.AreEqual(ctx.Db<ContractKomb2>().TableName, "Contracts");
+                Equal(ctx.Db<ContractBase>().TableName, "Contracts");
+                Equal(ctx.Db<Contract>().TableName, "Contracts");
+                Equal(ctx.Db<ContractFixed>().TableName, "Contracts");
+                Equal(ctx.Db<ContractStock>().TableName, "Contracts");
+                Equal(ctx.Db<ContractKomb1>().TableName, "Contracts");
+                Equal(ctx.Db<ContractKomb2>().TableName, "Contracts");
 
-                Assert.AreEqual(ctx.Db<WorkerTPT>().TableName, "WorkerTPTs");
-                Assert.AreEqual(ctx.Db<ManagerTPT>().TableName, "ManagerTPTs");
+                Equal(ctx.Db<WorkerTPT>().TableName, "WorkerTPTs");
+                Equal(ctx.Db<ManagerTPT>().TableName, "ManagerTPTs");
 
-                Assert.AreEqual(ctx.Db<Foo>().TableName, "FOO");
-                Assert.AreEqual(ctx.Db<Foo>().Schema, "dbx");
+                Equal(ctx.Db<Foo>().TableName, "FOO");
+                Equal(ctx.Db<Foo>().Schema, "dbx");
             }
         }
 
-        [Test]
+        [Fact]
         public void Entity_WithMappedPk()
         {
             using (var ctx = GetContext())
@@ -72,7 +72,7 @@ namespace EntityFramework.Metadata.Test.CodeFirst
             }
         }
 
-        [Test]
+        [Fact]
         public void Entity_ComplexType()
         {
             using (var ctx = new TestContext())
@@ -209,8 +209,8 @@ namespace EntityFramework.Metadata.Test.CodeFirst
             }
         }
 
-        [Test]
-        public void Entity_ComplextType_WhereComplexTypeIsLastProperty()
+        [Fact]
+        public void Entity_ComplexType_WhereComplexTypeIsLastProperty()
         {
             using (var ctx = new TestContext())
             {
@@ -224,7 +224,7 @@ namespace EntityFramework.Metadata.Test.CodeFirst
             }
         }
 
-        [Test]
+        [Fact]
         public void Entity_ComplexType_WhereTwoComplexTypesAreAdjacent()
         {
             using (var ctx = new TestContext())
@@ -245,7 +245,7 @@ namespace EntityFramework.Metadata.Test.CodeFirst
             }
         }
 
-        [Test]
+        [Fact]
         public void Entity_TPT_WorkerTPT()
         {
             using (var ctx = GetContext())
@@ -299,7 +299,7 @@ namespace EntityFramework.Metadata.Test.CodeFirst
             }
         }
 
-        [Test]
+        [Fact]
         public void Entity_TPT_ManagerTPT()
         {
             using (var ctx = GetContext())
@@ -334,7 +334,7 @@ namespace EntityFramework.Metadata.Test.CodeFirst
             }
         }
 
-        [Test]
+        [Fact]
         public void Entity_Simple()
         {
             using (var ctx = new TestContext())
@@ -376,7 +376,7 @@ namespace EntityFramework.Metadata.Test.CodeFirst
                     .IsNavigationProperty(false)
                     .NavigationPropertyName("Parent");
 
-                Assert.AreEqual(map.Prop(x => x.PageId), map.Prop(x => x.ParentId).FkTargetColumn);
+                Equal(map.Prop(x => x.PageId), map.Prop(x => x.ParentId).FkTargetColumn);
                
                 map.Prop(x => x.Parent)
                     .HasColumnName("ParentId")
